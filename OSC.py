@@ -92,3 +92,50 @@ def run_block(marker, start_cue, end_cue, duration):
         gma3_cue(cue)
 
         time.sleep(cue_delay)
+
+# ==================================================
+# MAIN SHOW
+# ==================================================
+
+if __name__ == "__main__":
+
+    print("\n=== BLOCK 1 ===")
+
+    # Marker 1
+    # Cue 1 -> 5
+    # Duration 2 sec
+
+    run_block(
+        marker=1,
+        start_cue=1,
+        end_cue=5,
+        duration=2
+    )
+
+    print("\n=== BLOCK 2 ===")
+
+    # Marker 2
+    # Cue 6 -> 10
+    # Duration 2 sec
+
+    run_block(
+        marker=2,
+        start_cue=6,
+        end_cue=10,
+        duration=2
+    )
+
+    print("\n=== BLOCK 3 ===")
+
+    # Marker 3
+    # Cue 11 -> 15
+    # Duration 5 sec
+
+    run_block(
+        marker=3,
+        start_cue=11,
+        end_cue=15,
+        duration=5
+    )
+
+    print("\nSHOW COMPLETE")
