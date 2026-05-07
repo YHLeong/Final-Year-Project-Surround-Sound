@@ -1,37 +1,37 @@
-# Final Year Project - Surround Sound Show Control System
+# 🎓 Final Year Project - Surround Sound Show Control System
 
-## Overview
+## 📌 Overview
 
 This project is a Python-based show control system developed as part of my Final Year Project to demonstrate real-time synchronization between immersive surround sound playback and professional lighting control systems.
 
 The system integrates:
-- :contentReference[oaicite:0]{index=0} for multi-track surround sound playback
-- :contentReference[oaicite:1]{index=1} for lighting cue execution
-- OSC (Open Sound Control) over UDP networking
-- Python automation and timing logic
+- 🎵 :contentReference[oaicite:0]{index=0} for multi-track surround sound playback
+- 💡 :contentReference[oaicite:1]{index=1} for lighting cue execution
+- 🌐 OSC (Open Sound Control) over UDP networking
+- 🐍 Python automation and timing logic
 
 The objective of the project was to explore how modern AV and entertainment systems can be centrally automated using software-based control architecture similar to professional live production environments.
 
 ---
 
-# Project Goals
+# 🎯 Project Goals
 
 This project was designed to demonstrate the following technical capabilities:
 
-- Real-time communication between multiple professional systems
-- Audio and lighting synchronization
-- Automation using Python scripting
-- Network-based show control
-- Understanding of OSC protocol implementation
-- Timing and event sequencing
-- Integration of professional AV technologies
-- System-level thinking for immersive multimedia environments
+- ⚡ Real-time communication between multiple professional systems
+- 🔊 Audio and lighting synchronization
+- 🐍 Automation using Python scripting
+- 🌐 Network-based show control
+- 📡 Understanding of OSC protocol implementation
+- ⏱️ Timing and event sequencing
+- 🧩 Integration of professional AV technologies
+- 🏗️ System-level thinking for immersive multimedia environments
 
 ---
 
-# Technical Skills Demonstrated
+# 🛠️ Technical Skills Demonstrated
 
-## Software Development
+## 💻 Software Development
 
 - Python programming
 - Function-based architecture
@@ -44,9 +44,9 @@ This project was designed to demonstrate the following technical capabilities:
 
 ---
 
-## Audio Engineering Integration
+## 🎧 Audio Engineering Integration
 
-Using :contentReference[oaicite:2]{index=2}, the system controls:
+Using 🎵 :contentReference[oaicite:2]{index=2}, the system controls:
 - playback transport
 - timeline markers
 - synchronized multi-track audio playback
@@ -59,9 +59,9 @@ The project demonstrates an understanding of:
 
 ---
 
-## Lighting Control Integration
+## 💡 Lighting Control Integration
 
-Using :contentReference[oaicite:3]{index=3}, the system remotely executes:
+Using 💡 :contentReference[oaicite:3]{index=3}, the system remotely executes:
 - cue changes
 - timed lighting sequences
 - automated playback-triggered events
@@ -74,7 +74,7 @@ The implementation demonstrates:
 
 ---
 
-## Networking and Protocol Knowledge
+## 🌐 Networking and Protocol Knowledge
 
 The system uses OSC (Open Sound Control) over UDP networking.
 
@@ -86,27 +86,27 @@ Key concepts implemented:
 - Low-latency control systems
 
 This reflects practical understanding of protocols commonly used in:
-- live events
-- theatre systems
-- immersive installations
-- broadcast environments
-- AV-over-IP ecosystems
+- 🎭 live events
+- 🎬 theatre systems
+- 🌌 immersive installations
+- 📺 broadcast environments
+- 🖧 AV-over-IP ecosystems
 
 ---
 
-# How the System Works
+# ⚙️ How the System Works
 
 The Python application acts as the central show controller.
 
 It communicates with both:
-- :contentReference[oaicite:4]{index=4}
-- :contentReference[oaicite:5]{index=5}
+- 🎵 :contentReference[oaicite:4]{index=4}
+- 💡 :contentReference[oaicite:5]{index=5}
 
 using OSC messages sent over the network.
 
 ---
 
-# System Architecture
+# 🏗️ System Architecture
 
 ```text
 Python Show Controller
@@ -122,9 +122,9 @@ Python Show Controller
 
 ---
 
-# Code Workflow Breakdown
+# 🔍 Code Workflow Breakdown
 
-## 1. Establish OSC Connections
+## 1️⃣ Establish OSC Connections
 
 The script first creates OSC clients for both systems.
 
@@ -137,28 +137,28 @@ GMA3_PORT = 8000
 ```
 
 This allows Python to send network commands directly to:
-- REAPER
-- grandMA3
+- 🎵 REAPER
+- 💡 grandMA3
 
 ---
 
-## 2. REAPER Playback Control
+## 2️⃣ REAPER Playback Control
 
 The script remotely controls REAPER transport functions.
 
-### Play
+### ▶️ Play
 
 ```python
 reaper.send_message("/action/1007", 1.0)
 ```
 
-### Stop
+### ⏹️ Stop
 
 ```python
 reaper.send_message("/action/1016", 1.0)
 ```
 
-### Jump to Marker
+### 📍 Jump to Marker
 
 ```python
 /action/40161
@@ -173,7 +173,7 @@ without requiring manual user interaction.
 
 ---
 
-# Why This Matters
+# 🚀 Why This Matters
 
 This demonstrates:
 - external software control
@@ -183,7 +183,7 @@ This demonstrates:
 
 ---
 
-# 3. grandMA3 Cue Automation
+# 3️⃣ grandMA3 Cue Automation
 
 Lighting cues are triggered automatically using OSC command execution.
 
@@ -203,7 +203,7 @@ which are transmitted directly to the lighting console.
 
 ---
 
-# Why This Matters
+# 💡 Why This Matters
 
 This demonstrates:
 - automation of professional lighting systems
@@ -213,7 +213,7 @@ This demonstrates:
 
 ---
 
-# 4. Synchronization Engine
+# 4️⃣ Synchronization Engine
 
 The core system logic is handled by:
 
@@ -222,15 +222,15 @@ run_block()
 ```
 
 This function:
-1. Stops playback
-2. Jumps to a timeline marker
-3. Starts playback
-4. Executes lighting cues sequentially
-5. Maintains timing between events
+1. ⏹️ Stops playback
+2. 📍 Jumps to a timeline marker
+3. ▶️ Starts playback
+4. 💡 Executes lighting cues sequentially
+5. ⏱️ Maintains timing between events
 
 ---
 
-# Timing Logic
+# ⏳ Timing Logic
 
 Cue timing is calculated dynamically:
 
@@ -247,7 +247,7 @@ Result:
 
 ---
 
-# Why This Matters
+# 🧠 Why This Matters
 
 This demonstrates understanding of:
 - event scheduling
@@ -256,14 +256,14 @@ This demonstrates understanding of:
 - timed execution systems
 
 which are critical concepts in:
-- live show control
-- broadcast automation
-- immersive AV systems
-- themed entertainment technology
+- 🎭 live show control
+- 📺 broadcast automation
+- 🌌 immersive AV systems
+- 🎢 themed entertainment technology
 
 ---
 
-# Example Show Sequence
+# 🎬 Example Show Sequence
 
 ```python
 run_block(
@@ -289,9 +289,9 @@ Execution flow:
 
 ---
 
-# Engineering Concepts Applied
+# 🏗️ Engineering Concepts Applied
 
-## Real-Time Systems
+## ⚡ Real-Time Systems
 
 The project implements:
 - timed execution
@@ -300,7 +300,7 @@ The project implements:
 
 ---
 
-## Automation Systems
+## 🤖 Automation Systems
 
 The project automates:
 - playback transport
@@ -311,7 +311,7 @@ without manual operation.
 
 ---
 
-## System Integration
+## 🔗 System Integration
 
 The project combines multiple professional systems into one unified control workflow.
 
@@ -326,7 +326,7 @@ must operate together reliably.
 
 ---
 
-# Challenges Solved During Development
+# 🧪 Challenges Solved During Development
 
 During development, several engineering challenges were addressed:
 
@@ -339,14 +339,14 @@ During development, several engineering challenges were addressed:
 - Real-time execution stability
 
 This required troubleshooting across:
-- software
-- networking
-- timing systems
-- AV integration workflows
+- 💻 software
+- 🌐 networking
+- ⏱️ timing systems
+- 🎛️ AV integration workflows
 
 ---
 
-# Future Improvements
+# 🚀 Future Improvements
 
 Potential future development includes:
 - SMPTE timecode integration
@@ -360,20 +360,20 @@ Potential future development includes:
 
 ---
 
-# Technologies Used
+# 🧰 Technologies Used
 
 | Technology | Purpose |
 |---|---|
-| Python | Automation logic |
-| python-osc | OSC communication |
-| OSC Protocol | Show control messaging |
-| UDP Networking | Real-time communication |
-| :contentReference[oaicite:6]{index=6} | Surround sound playback |
-| :contentReference[oaicite:7]{index=7} | Lighting control |
+| 🐍 Python | Automation logic |
+| 🌐 python-osc | OSC communication |
+| 📡 OSC Protocol | Show control messaging |
+| 🖧 UDP Networking | Real-time communication |
+| 🎵 :contentReference[oaicite:6]{index=6} | Surround sound playback |
+| 💡 :contentReference[oaicite:7]{index=7} | Lighting control |
 
 ---
 
-# Project Significance
+# 🎯 Project Significance
 
 This project demonstrates practical skills in:
 - software development
