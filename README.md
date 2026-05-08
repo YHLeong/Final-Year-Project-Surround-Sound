@@ -1,272 +1,117 @@
-# 🎓 Final Year Project - Surround Sound Show Control System
+# 🎭 OSC-Based Multimedia Show Control System
 
-## 📌 Overview
-
-This project is a Python-based show control system developed as part of my Final Year Project to demonstrate real-time synchronization between immersive surround sound playback and professional lighting control systems.
-
-The system integrates:
-- 🎵 :contentReference[oaicite:0]{index=0} for multi-track surround sound playback
-- 💡 :contentReference[oaicite:1]{index=1} for lighting cue execution
-- 🌐 OSC (Open Sound Control) over UDP networking
-- 🐍 Python automation and timing logic
-
-The objective of the project was to explore how modern AV and entertainment systems can be centrally automated using software-based control architecture similar to professional live production environments.
+> Synchronizing audio playback and lighting control using  
+> **Python + REAPER + grandMA3 onPC**
 
 ---
 
-# 🎯 Project Goals
+# 🚀 Project Overview
 
-This project was designed to demonstrate the following technical capabilities:
+This project demonstrates a lightweight multimedia show control system using:
 
-- ⚡ Real-time communication between multiple professional systems
-- 🔊 Audio and lighting synchronization
-- 🐍 Automation using Python scripting
-- 🌐 Network-based show control
-- 📡 Understanding of OSC protocol implementation
-- ⏱️ Timing and event sequencing
-- 🧩 Integration of professional AV technologies
-- 🏗️ System-level thinking for immersive multimedia environments
+- 🎵 REAPER for audio playback
+- 💡 grandMA3 onPC for lighting control
+- 🐍 Python for automation and OSC communication
 
----
+The system automates:
+- audio playback
+- timeline navigation
+- lighting cue execution
+- sequential show blocks
 
-# 🛠️ Technical Skills Demonstrated
-
-## 💻 Software Development
-
-- Python programming
-- Function-based architecture
-- Modular system design
-- Network communication
-- Real-time event sequencing
-- Timing synchronization logic
-- Command abstraction
-- Structured code organization
+using **OSC (Open Sound Control)** over localhost.
 
 ---
 
-## 🎧 Audio Engineering Integration
+# 🖥️ System Architecture
 
-Using 🎵 :contentReference[oaicite:2]{index=2}, the system controls:
-- playback transport
-- timeline markers
-- synchronized multi-track audio playback
+```mermaid
+flowchart TD
 
-The project demonstrates an understanding of:
-- DAW automation
-- OSC device control
-- surround sound workflow integration
-- playback synchronization
+    A[🐍 Python Script]
 
----
+    A -->|OSC Commands| B[🎵 REAPER]
+    A -->|OSC Commands| C[💡 grandMA3 onPC]
 
-## 💡 Lighting Control Integration
+    B --> D[▶️ Playback Control]
+    B --> E[📍 Marker Navigation]
 
-Using 💡 :contentReference[oaicite:3]{index=3}, the system remotely executes:
-- cue changes
-- timed lighting sequences
-- automated playback-triggered events
-
-The implementation demonstrates:
-- lighting console networking
-- OSC-based command execution
-- show sequencing logic
-- cue automation workflow
-
----
-
-## 🌐 Networking and Protocol Knowledge
-
-The system uses OSC (Open Sound Control) over UDP networking.
-
-Key concepts implemented:
-- IP-based communication
-- UDP packet transmission
-- OSC message formatting
-- Device-to-device communication
-- Low-latency control systems
-
-This reflects practical understanding of protocols commonly used in:
-- 🎭 live events
-- 🎬 theatre systems
-- 🌌 immersive installations
-- 📺 broadcast environments
-- 🖧 AV-over-IP ecosystems
-
----
-
-# ⚙️ How the System Works
-
-The Python application acts as the central show controller.
-
-It communicates with both:
-- 🎵 :contentReference[oaicite:4]{index=4}
-- 💡 :contentReference[oaicite:5]{index=5}
-
-using OSC messages sent over the network.
-
----
-
-# 🏗️ System Architecture
-
-```text
-Python Show Controller
-        │
-        ├── OSC UDP → REAPER
-        │       ├── Stop Playback
-        │       ├── Jump Timeline Marker
-        │       └── Start Playback
-        │
-        └── OSC UDP → grandMA3
-                └── Trigger Lighting Cues
+    C --> F[💡 Cue Triggering]
+    C --> G[🎬 Sequence Control]
 ```
 
 ---
 
-# 🔍 Code Workflow Breakdown
+# 🌐 Communication Flow
 
-## 1️⃣ Establish OSC Connections
+```mermaid
+sequenceDiagram
 
-The script first creates OSC clients for both systems.
+    participant Python as 🐍 Python Script
+    participant REAPER as 🎵 REAPER
+    participant GMA3 as 💡 grandMA3
 
-```python
-REAPER_IP = "127.0.0.1"
-REAPER_PORT = 8001
+    Python->>REAPER: Stop Playback
+    Python->>REAPER: Jump to Marker
+    Python->>REAPER: Start Playback
 
-GMA3_IP = "127.0.0.1"
-GMA3_PORT = 8000
+    loop Cue Sequence
+        Python->>GMA3: Goto Cue X Sequence 1
+    end
 ```
-
-This allows Python to send network commands directly to:
-- 🎵 REAPER
-- 💡 grandMA3
 
 ---
 
-## 2️⃣ REAPER Playback Control
+# ✨ Core Features
 
-The script remotely controls REAPER transport functions.
+## 🎵 REAPER Integration
 
-### ▶️ Play
+The script can:
+
+- ▶️ Start playback
+- ⏹️ Stop playback
+- 📍 Jump to timeline markers
+
+using REAPER OSC action commands.
+
+Example:
 
 ```python
 reaper.send_message("/action/1007", 1.0)
 ```
 
-### ⏹️ Stop
-
-```python
-reaper.send_message("/action/1016", 1.0)
-```
-
-### 📍 Jump to Marker
-
-```python
-/action/40161
-```
-
-These commands automate:
-- playback start
-- playback stop
-- timeline navigation
-
-without requiring manual user interaction.
-
 ---
 
-# 🚀 Why This Matters
+## 💡 grandMA3 Cue Control
 
-This demonstrates:
-- external software control
-- protocol-level integration
-- automation engineering
-- understanding of DAW command systems
-
----
-
-# 3️⃣ grandMA3 Cue Automation
-
-Lighting cues are triggered automatically using OSC command execution.
-
-Example:
-
-```python
-command = f"Goto Cue {cue_number} Sequence 1"
-```
-
-This dynamically generates lighting commands such as:
+Lighting cues are triggered directly through OSC commands:
 
 ```text
-Goto Cue 5 Sequence 1
-```
-
-which are transmitted directly to the lighting console.
-
----
-
-# 💡 Why This Matters
-
-This demonstrates:
-- automation of professional lighting systems
-- real-time command generation
-- dynamic cue control
-- integration between audio and lighting systems
-
----
-
-# 4️⃣ Synchronization Engine
-
-The core system logic is handled by:
-
-```python
-run_block()
-```
-
-This function:
-1. ⏹️ Stops playback
-2. 📍 Jumps to a timeline marker
-3. ▶️ Starts playback
-4. 💡 Executes lighting cues sequentially
-5. ⏱️ Maintains timing between events
-
----
-
-# ⏳ Timing Logic
-
-Cue timing is calculated dynamically:
-
-```python
-cue_delay = duration / total_cues
+Goto Cue X Sequence 1
 ```
 
 Example:
-- 5 cues
-- 2 second duration
-
-Result:
-- 0.4 second interval between cues
-
----
-
-# 🧠 Why This Matters
-
-This demonstrates understanding of:
-- event scheduling
-- synchronization logic
-- real-time automation
-- timed execution systems
-
-which are critical concepts in:
-- 🎭 live show control
-- 📺 broadcast automation
-- 🌌 immersive AV systems
-- 🎢 themed entertainment technology
-
----
-
-# 🎬 Example Show Sequence
 
 ```python
-run_block(
+gma3.send_message("/gma3/cmd", "Goto Cue 5 Sequence 1")
+```
+
+---
+
+# 🧩 Block-Based Show Programming
+
+The show is divided into programmable blocks.
+
+Each block contains:
+- 📍 REAPER marker
+- 💡 starting cue
+- 💡 ending cue
+- ⏱️ duration
+
+Example:
+
+```python
+ShowBlock(
     marker=1,
     start_cue=1,
     end_cue=5,
@@ -274,113 +119,194 @@ run_block(
 )
 ```
 
-Execution flow:
+---
 
-```text
-1. Stop REAPER
-2. Jump to Marker 1
-3. Start Playback
-4. Trigger Cue 1
-5. Trigger Cue 2
-6. Trigger Cue 3
-7. Trigger Cue 4
-8. Trigger Cue 5
+# 🛠️ Software Stack
+
+| Software | Purpose |
+|---|---|
+| 🎵 REAPER | Audio playback and timeline control |
+| 💡 grandMA3 onPC | Lighting cue execution |
+| 🐍 Python | Automation and scripting |
+| 📡 python-osc | OSC networking library |
+
+---
+
+# 📚 Python Library
+
+## 📡 python-osc
+
+Used for communication between:
+- REAPER
+- grandMA3
+- Python
+
+Install using:
+
+```bash
+pip install python-osc
 ```
 
 ---
 
-# 🏗️ Engineering Concepts Applied
+# 🧠 Code Structure
 
-## ⚡ Real-Time Systems
+```mermaid
+flowchart TD
 
-The project implements:
-- timed execution
-- event sequencing
-- low-latency communication
+    A[⚙️ Configuration]
 
----
+    A --> B[🌐 OSC Clients]
 
-## 🤖 Automation Systems
+    B --> C[🧱 ShowBlock Dataclass]
 
-The project automates:
-- playback transport
-- cue sequencing
-- synchronized execution
+    C --> D[🎵 REAPER Functions]
+    C --> E[💡 grandMA3 Functions]
 
-without manual operation.
+    D --> F[⚡ Show Engine]
+    E --> F
 
----
-
-## 🔗 System Integration
-
-The project combines multiple professional systems into one unified control workflow.
-
-This reflects real-world AV engineering practices where:
-- audio
-- lighting
-- video
-- networking
-- control systems
-
-must operate together reliably.
+    F --> G[🎬 Main Show Execution]
+```
 
 ---
 
-# 🧪 Challenges Solved During Development
+# 🎬 Example Show Flow
 
-During development, several engineering challenges were addressed:
+```mermaid
+timeline
+    title 🎭 Show Timeline
 
-- OSC communication setup
-- Port routing and device networking
-- Synchronization timing
-- Command sequencing reliability
-- Cross-platform software communication
-- Automation workflow testing
-- Real-time execution stability
+    Block 1 : 📍 Marker 1
+            : 💡 Cue 1 → 5
+            : ⏱️ 2 Seconds
 
-This required troubleshooting across:
-- 💻 software
-- 🌐 networking
-- ⏱️ timing systems
-- 🎛️ AV integration workflows
+    Block 2 : 📍 Marker 2
+            : 💡 Cue 6 → 10
+            : ⏱️ 2 Seconds
 
----
-
-# 🚀 Future Improvements
-
-Potential future development includes:
-- SMPTE timecode integration
-- GUI-based control interface
-- Dynamic JSON show files
-- Async event processing
-- Multi-device synchronization
-- AV-over-IP routing
-- Real-time monitoring dashboard
-- Error handling and recovery systems
+    Block 3 : 📍 Marker 3
+            : 💡 Cue 11 → 15
+            : ⏱️ 5 Seconds
+```
 
 ---
 
-# 🧰 Technologies Used
+# ⚡ Show Execution Flow
 
-| Technology | Purpose |
-|---|---|
-| 🐍 Python | Automation logic |
-| 🌐 python-osc | OSC communication |
-| 📡 OSC Protocol | Show control messaging |
-| 🖧 UDP Networking | Real-time communication |
-| 🎵 :contentReference[oaicite:6]{index=6} | Surround sound playback |
-| 💡 :contentReference[oaicite:7]{index=7} | Lighting control |
+```mermaid
+flowchart LR
+
+    A[⏹️ Stop REAPER]
+        --> B[📍 Jump to Marker]
+
+    B --> C[▶️ Start Playback]
+
+    C --> D[💡 Trigger Cue Sequence]
+
+    D --> E[⏱️ Delay Between Cues]
+
+    E --> F[🎬 Next Cue]
+```
 
 ---
 
-# 🎯 Project Significance
+# ✅ Advantages
 
-This project demonstrates practical skills in:
-- software development
-- automation engineering
-- professional AV integration
-- networking
-- multimedia system control
-- real-time systems design
+## ⚡ Simple Architecture
 
-The implementation reflects how software engineering principles can be applied within professional entertainment and AV technology environments to create synchronized immersive experiences.
+Uses:
+- one laptop
+- localhost networking
+- lightweight automation
+
+This reduces:
+- hardware complexity
+- setup time
+- synchronization delay
+
+---
+
+## 🚀 Fast Development Workflow
+
+The block structure allows:
+- rapid testing
+- quick cue adjustments
+- modular show programming
+
+---
+
+## 🎛️ Flexible Control
+
+Lighting and audio can be modified independently while maintaining synchronized playback.
+
+---
+
+# ⚠️ Current Limitations
+
+The current system uses:
+
+```python
+time.sleep()
+```
+
+for timing control.
+
+This can introduce:
+- ⌛ timing drift
+- 🖥️ OS scheduling delay
+- ⚠️ non-frame-accurate synchronization
+
+For professional-grade synchronization:
+- MIDI Timecode (MTC)
+- SMPTE Timecode
+
+would provide significantly higher precision.
+
+---
+
+# 🔮 Future Improvements
+
+```mermaid
+mindmap
+  root((🔮 Future Improvements))
+
+    🎞️ Timecode Sync
+      MIDI Timecode
+      SMPTE Integration
+
+    🌌 Spatial Audio
+      L-ISA Integration
+      Object Automation
+
+    🖥️ UI Development
+      Control Dashboard
+      Real-Time Monitoring
+
+    ⚡ Performance
+      Async OSC
+      Recovery Handling
+      Emergency Stop
+```
+
+---
+
+# 🏁 Conclusion
+
+This project demonstrates a compact OSC-based multimedia show control workflow integrating:
+
+- 🎵 REAPER
+- 💡 grandMA3 onPC
+- 🐍 Python automation
+
+The system provides:
+- synchronized playback
+- automated lighting control
+- scalable show sequencing
+- efficient multimedia integration
+
+suitable for:
+- 🎓 educational showcases
+- 🎭 multimedia performances
+- 🧪 experimental installations
+- 🎬 small-scale live productions

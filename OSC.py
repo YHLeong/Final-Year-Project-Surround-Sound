@@ -1,141 +1,119 @@
 import time
+from dataclasses import dataclass
 from pythonosc import udp_client
 
 # ==================================================
-# REAPER CONFIG
+# CONFIG
 # ==================================================
 
 REAPER_IP = "127.0.0.1"
 REAPER_PORT = 8001
 
-reaper = udp_client.SimpleUDPClient(REAPER_IP, REAPER_PORT)
-
-# ==================================================
-# grandMA3 CONFIG
-# ==================================================
-
 GMA3_IP = "127.0.0.1"
 GMA3_PORT = 8000
 GMA3_ADDR = "/gma3/cmd"
 
+MARKER_ACTIONS = {
+    1: 40161,
+    2: 40162,
+    3: 40163,
+}
+
+# ==================================================
+# OSC CLIENTS
+# ==================================================
+
+reaper = udp_client.SimpleUDPClient(REAPER_IP, REAPER_PORT)
 gma3 = udp_client.SimpleUDPClient(GMA3_IP, GMA3_PORT)
 
 # ==================================================
-# REAPER FUNCTIONS
+# SHOW DATA
+# ==================================================
+
+@dataclass
+class ShowBlock:
+    marker: int
+    start_cue: int
+    end_cue: int
+    duration: float
+
+
+SHOW = [
+    ShowBlock(marker=1, start_cue=1,  end_cue=5,  duration=2),
+    ShowBlock(marker=2, start_cue=6,  end_cue=10, duration=2),
+    ShowBlock(marker=3, start_cue=11, end_cue=15, duration=5),
+]
+
+# ==================================================
+# REAPER
 # ==================================================
 
 def reaper_play():
     reaper.send_message("/action/1007", 1.0)
     print("REAPER PLAY")
 
+
 def reaper_stop():
     reaper.send_message("/action/1016", 1.0)
     print("REAPER STOP")
 
-def reaper_jump_marker(marker_number):
 
-    marker_action = {
-        1: 40161,
-        2: 40162,
-        3: 40163
-    }
+def reaper_jump_marker(marker: int):
+    action_id = MARKER_ACTIONS.get(marker)
 
-    action_id = marker_action.get(marker_number)
+    if action_id is None:
+        raise ValueError(f"Invalid marker: {marker}")
 
-    if action_id:
-        reaper.send_message(f"/action/{action_id}", 1.0)
-        print(f"REAPER MARKER {marker_number}")
+    reaper.send_message(f"/action/{action_id}", 1.0)
+    print(f"REAPER MARKER {marker}")
 
 # ==================================================
-# grandMA3 FUNCTION
+# grandMA3
 # ==================================================
 
-def gma3_cue(cue_number):
-
-    command = f"Goto Cue {cue_number} Sequence 1"
+def gma3_cue(cue: int):
+    command = f"Goto Cue {cue} Sequence 1"
 
     gma3.send_message(GMA3_ADDR, command)
 
-    print(f"GMA3 CUE {cue_number}")
+    print(f"GMA3 CUE {cue}")
 
 # ==================================================
-# SHOW BLOCK FUNCTION
+# SHOW ENGINE
 # ==================================================
 
-def run_block(marker, start_cue, end_cue, duration):
-
-    total_cues = (end_cue - start_cue) + 1
-
-    # Time gap between each cue
-    cue_delay = duration / total_cues
-
-    # ------------------------------
-    # REAPER
-    # ------------------------------
-
+def prepare_reaper(marker: int):
     reaper_stop()
-
     time.sleep(0.2)
 
     reaper_jump_marker(marker)
-
     time.sleep(0.2)
 
     reaper_play()
 
-    # ------------------------------
-    # grandMA3 cue sequence
-    # ------------------------------
 
-    for cue in range(start_cue, end_cue + 1):
+def run_block(block: ShowBlock):
+    total_cues = (block.end_cue - block.start_cue) + 1
+    cue_delay = block.duration / total_cues
 
+    prepare_reaper(block.marker)
+
+    for cue in range(block.start_cue, block.end_cue + 1):
         gma3_cue(cue)
-
         time.sleep(cue_delay)
 
 # ==================================================
-# MAIN SHOW
+# MAIN
 # ==================================================
 
-if __name__ == "__main__":
+def main():
+    for index, block in enumerate(SHOW, start=1):
+        print(f"\n=== BLOCK {index} ===")
 
-    print("\n=== BLOCK 1 ===")
-
-    # Marker 1
-    # Cue 1 -> 5
-    # Duration 2 sec
-
-    run_block(
-        marker=1,
-        start_cue=1,
-        end_cue=5,
-        duration=2
-    )
-
-    print("\n=== BLOCK 2 ===")
-
-    # Marker 2
-    # Cue 6 -> 10
-    # Duration 2 sec
-
-    run_block(
-        marker=2,
-        start_cue=6,
-        end_cue=10,
-        duration=2
-    )
-
-    print("\n=== BLOCK 3 ===")
-
-    # Marker 3
-    # Cue 11 -> 15
-    # Duration 5 sec
-
-    run_block(
-        marker=3,
-        start_cue=11,
-        end_cue=15,
-        duration=5
-    )
+        run_block(block)
 
     print("\nSHOW COMPLETE")
+
+
+if __name__ == "__main__":
+    main()
